@@ -10,7 +10,15 @@ import sys
 sys.stdout.reconfigure(encoding="utf-8")
 
 import argparse
+from pathlib import Path
 import time
+
+# Ensure 'src' is importable
+SRC_DIR = Path(__file__).resolve().parents[1] / "src"
+if str(SRC_DIR) not in sys.path:
+    sys.path.insert(0, str(SRC_DIR))
+
+RESULTS_FILE = Path(__file__).resolve().parent / "benchmark_results.txt"
 
 from data_validation import generate_demo_data
 from optimization_model import solve_location_model
@@ -126,7 +134,7 @@ def main():
     )
 
     # Save results to file
-    with open("benchmark_results.txt", "a", encoding="utf-8") as f:
+    with open(RESULTS_FILE, "a", encoding="utf-8") as f:
         from datetime import datetime
         f.write(f"\n{'=' * 60}\n")
         f.write(f"Benchmark: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
@@ -134,7 +142,7 @@ def main():
             f.write(f"  {key}: {value}\n")
         f.write(f"{'=' * 60}\n")
 
-    print(f"Results appended to benchmark_results.txt")
+    print(f"Results appended to {RESULTS_FILE.name}")
     return 0 if result["status"] in ("OPTIMAL", "FEASIBLE_LIMIT") else 1
 
 
