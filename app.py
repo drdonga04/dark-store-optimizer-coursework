@@ -8,7 +8,13 @@ import json
 import os
 from pathlib import Path
 import random
+import sys
 import time
+
+APP_DIR = Path(__file__).resolve().parent
+SRC_DIR = APP_DIR / "src"
+if str(SRC_DIR) not in sys.path:
+    sys.path.insert(0, str(SRC_DIR))
 
 import folium
 from folium.plugins import HeatMap, MarkerCluster
@@ -31,15 +37,15 @@ from routing_provider import OpenRouteServiceClient
 from sensitivity_analysis import run_sensitivity_scenarios
 
 
-APP_DIR = Path(__file__).resolve().parent
+DATA_EXAMPLES_DIR = APP_DIR / "data" / "examples"
 EXAMPLE_FILES = {
     "Optimizer run": (
-        APP_DIR / "optimizer_example_customers.csv",
-        APP_DIR / "optimizer_example_stores.csv",
+        DATA_EXAMPLES_DIR / "optimizer_example_customers.csv",
+        DATA_EXAMPLES_DIR / "optimizer_example_stores.csv",
     ),
     "Sensitivity analysis": (
-        APP_DIR / "sensitivity_example_customers.csv",
-        APP_DIR / "sensitivity_example_stores.csv",
+        DATA_EXAMPLES_DIR / "sensitivity_example_customers.csv",
+        DATA_EXAMPLES_DIR / "sensitivity_example_stores.csv",
     ),
 }
 P_PRESETS = {

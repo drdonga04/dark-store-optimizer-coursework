@@ -129,7 +129,8 @@ class DemoDataTests(unittest.TestCase):
         self.assertEqual(len(validate_stores_csv(store_buffer.getvalue())), 6)
 
     def test_example_inputs_validate_and_sensitivity_capacity_is_feasible(self):
-        examples = Path(__file__).resolve().parents[1]
+        project_root = Path(__file__).resolve().parents[1]
+        examples = project_root / "data" / "examples"
         optimizer_customers = validate_customers_csv(
             (examples / "optimizer_example_customers.csv").read_bytes()
         )
